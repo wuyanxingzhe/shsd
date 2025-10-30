@@ -1,0 +1,10 @@
+services:
+  triple-harmony-entropy-motion:
+    image: ghcr.io/conardli/triple-harmony-entropy-motion
+    container_name: triple-harmony-entropy-motion
+    ports:
+      - '1717:1717'
+    volumes:
+      - ./local-db:/app/local-db
+      # - ./prisma:/app/prisma 如果需要挂载请先手动初始化数据库文件
+    restart: unless-stopped
