@@ -122,7 +122,33 @@ export default function Navbar({ projects = [], currentProject }) {
   };
 
   const toggleTheme = () => {
-    setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
+    // 主题切换逻辑：支持默认主题和Vibrant主题，同时保留明暗模式
+    // 解析当前主题信息
+    const parts = resolvedTheme.split('-');
+    let currentMode = 'light';
+    let currentTheme = 'default';
+    
+    if (parts.length === 2) {
+      if (['light', 'dark'].includes(parts[0])) {
+        currentMode = parts[0];
+        currentTheme = parts[1];
+      } else {
+        currentTheme = parts[0];
+        currentMode = parts[1];
+      }
+    } else if (['light', 'dark'].includes(resolvedTheme)) {
+      currentMode = resolvedTheme;
+    } else {
+      currentTheme = resolvedTheme;
+    }
+    
+    // 切换主题：先在default和vibrant之间切换，然后是明暗模式
+    const themes = ['default', 'vibrant'];
+    const currentThemeIndex = themes.indexOf(currentTheme);
+    const nextTheme = themes[(currentThemeIndex + 1) % themes.length];
+    
+    // 设置新主题，保留当前模式
+    setTheme(`${nextTheme}-${currentMode}`);
   };
 
   return (
@@ -454,7 +480,7 @@ export default function Navbar({ projects = [], currentProject }) {
             <LanguageSwitcher />
           </Box>
           {/* 主题切换按钮 - 现代化设计 */}
-          <Tooltip title={resolvedTheme === 'dark' ? t('theme.switchToLight') : t('theme.switchToDark')}>
+          <Tooltip title={`切换到${resolvedTheme.includes('vibrant') ? '默认' : 'Vibrant'}主题`}>
             <IconButton
               onClick={toggleTheme}
               size="small"
