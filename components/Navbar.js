@@ -129,12 +129,15 @@ export default function Navbar({ projects = [], currentProject }) {
     <AppBar
       position="static"
       elevation={0}
-      color={theme.palette.mode === 'dark' ? 'transparent' : 'primary'}
       sx={{
         borderBottom: `1px solid ${theme.palette.divider}`,
-        bgcolor: theme.palette.mode === 'dark' ? 'background.paper' : 'primary.main'
+        bgcolor: theme.palette.background.paper,
+        backdropFilter: 'blur(10px)',
+        backgroundColor: theme.palette.mode === 'dark' 
+          ? 'rgba(17, 24, 39, 0.95)' 
+          : 'rgba(255, 255, 255, 0.95)'
       }}
-      style={{ borderRadius: 0, zIndex: 99000 }}
+      style={{ zIndex: 99000 }}
     >
       <Toolbar
         sx={{
@@ -162,24 +165,33 @@ export default function Navbar({ projects = [], currentProject }) {
           >
             <Box
               component="img"
-              src="/imgs/shsd_logo.png"
+              src="/imgs/logo.png"
               alt="Triple Harmony Entropy Motion Logo"
               sx={{
-                width: 28,
-                height: 28,
-                mr: 1.5
+                width: 36,
+                height: 36,
+                mr: 1.5,
+                borderRadius: 1,
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+                transition: 'all 0.3s ease'
               }}
             />
             <Typography
               variant="h6"
               component="div"
               sx={{
-                fontWeight: 600,
-                letterSpacing: '-0.5px'
+                fontWeight: 700,
+                letterSpacing: '-0.5px',
+                fontSize: '1.1rem',
+                background: theme.palette.mode === 'dark' 
+                  ? 'linear-gradient(90deg, #6366f1, #8b5cf6)' 
+                  : 'linear-gradient(90deg, #4f46e5, #7c3aed)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+                textFillColor: 'transparent',
+                display: 'inline-block'
               }}
-              style={{ fontSize: '1.1rem' }}
-              className={theme.palette.mode === 'dark' ? 'gradient-text' : ''}
-              color={theme.palette.mode === 'dark' ? 'inherit' : 'white'}
             >
               Triple Harmony Entropy Motion
             </Typography>
@@ -240,29 +252,36 @@ export default function Navbar({ projects = [], currentProject }) {
                     ? 'datasets'
                     : pathname
               }
-              textColor="inherit"
-              indicatorColor="secondary"
+              TabIndicatorProps={{
+                style: {
+                  backgroundColor: theme.palette.primary.main,
+                  height: 3,
+                  borderRadius: 1.5,
+                  marginBottom: 1
+                }
+              }}
               sx={{
                 '& .MuiTab-root': {
-                  minWidth: 100,
-                  fontSize: '0.85rem',
-                  transition: 'all 0.2s',
-                  color: theme.palette.mode === 'dark' ? 'inherit' : 'white',
-                  opacity: theme.palette.mode === 'dark' ? 0.7 : 0.8,
-                  padding: '6px 16px',
+                  minWidth: 120,
+                  fontSize: '0.875rem',
+                  fontWeight: 500,
+                  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                  color: theme.palette.text.secondary,
+                  padding: '8px 16px',
                   minHeight: '48px',
                   '&:hover': {
-                    color: theme.palette.mode === 'dark' ? theme.palette.secondary.main : 'white',
-                    opacity: 1
+                    color: theme.palette.primary.main,
+                    bgcolor: theme.palette.mode === 'dark' 
+                      ? 'rgba(99, 102, 241, 0.1)' 
+                      : 'rgba(99, 102, 241, 0.08)'
                   }
                 },
                 '& .Mui-selected': {
-                  color: theme.palette.mode === 'dark' ? theme.palette.secondary.main : 'white',
-                  opacity: 1,
-                  fontWeight: 600
-                },
-                '& .MuiTabs-indicator': {
-                  backgroundColor: theme.palette.mode === 'dark' ? theme.palette.secondary.main : 'white'
+                  color: theme.palette.primary.main,
+                  fontWeight: 600,
+                  bgcolor: theme.palette.mode === 'dark' 
+                    ? 'rgba(99, 102, 241, 0.08)' 
+                    : 'rgba(99, 102, 241, 0.05)'
                 }
               }}
             >
@@ -423,8 +442,8 @@ export default function Navbar({ projects = [], currentProject }) {
           </MenuItem>
         </Menu>
 
-        {/* 右侧操作区 - 使用Flex布局 */}
-        <Box sx={{ display: 'flex', flexGrow: 0, alignItems: 'center', gap: 1.5 }}>
+        {/* 右侧的操作区 - 从右到左排列 */}
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
           {/* 模型选择 */}
           {location.pathname.includes('/projects/') && <ModelSelect projectId={selectedProject} />}
           {/* 任务图标 - 仅在项目页面显示 */}
@@ -434,18 +453,23 @@ export default function Navbar({ projects = [], currentProject }) {
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <LanguageSwitcher />
           </Box>
-          {/* 主题切换按钮 */}
+          {/* 主题切换按钮 - 现代化设计 */}
           <Tooltip title={resolvedTheme === 'dark' ? t('theme.switchToLight') : t('theme.switchToDark')}>
             <IconButton
               onClick={toggleTheme}
               size="small"
               sx={{
-                bgcolor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(255, 255, 255, 0.15)',
-                color: theme.palette.mode === 'dark' ? 'inherit' : 'white',
-                p: 1,
-                borderRadius: 1.5,
+                bgcolor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)',
+                color: theme.palette.text.secondary,
+                p: 1.2,
+                borderRadius: '50%',
+                minWidth: 36,
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 '&:hover': {
-                  bgcolor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.25)'
+                  bgcolor: theme.palette.primary.main,
+                  color: 'white',
+                  transform: 'scale(1.05)'
                 }
               }}
             >
@@ -457,47 +481,28 @@ export default function Navbar({ projects = [], currentProject }) {
             </IconButton>
           </Tooltip>
 
-          {/* 文档链接 */}
-          <Tooltip title={t('documentation')}>
+          {/* 用户头像按钮 - 现代化设计 */}
+          <Tooltip title={t('userProfile') || '个人中心'}>
             <IconButton
-              href={
-                i18n.language === 'zh-CN' ? 'https://docs.triple-harmony-entropy-motion.com/' : 'https://docs.triple-harmony-entropy-motion.com/en'
-              }
-              target="_blank"
-              rel="noopener noreferrer"
               size="small"
               sx={{
-                bgcolor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(255, 255, 255, 0.15)',
-                color: theme.palette.mode === 'dark' ? 'inherit' : 'white',
-                p: 1,
-                borderRadius: 1.5,
+                bgcolor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)',
+                color: theme.palette.primary.main,
+                p: 1.2,
+                borderRadius: '50%',
+                minWidth: 36,
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)',
+                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                 '&:hover': {
-                  bgcolor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.25)'
-                },
-                mr: 1,
-                marginRight: 0
-              }}
-            >
-              <HelpOutlineIcon fontSize="small" />
-            </IconButton>
-          </Tooltip>
-
-          {/* GitHub链接 */}
-          <Tooltip title={t('common.visitGitHub')}>
-            <IconButton
-              onClick={() => window.open('https://github.com/ConardLi/triple-harmony-entropy-motion', '_blank')}
-              size="small"
-              sx={{
-                bgcolor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(255, 255, 255, 0.15)',
-                color: theme.palette.mode === 'dark' ? 'inherit' : 'white',
-                p: 1,
-                borderRadius: 1.5,
-                '&:hover': {
-                  bgcolor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.25)'
+                  bgcolor: theme.palette.primary.main,
+                  color: 'white',
+                  transform: 'scale(1.05)'
                 }
               }}
             >
-              <GitHubIcon fontSize="small" />
+              <Box sx={{ width: 20, height: 20, borderRadius: '50%', bgcolor: theme.palette.primary.main, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Typography sx={{ color: 'white', fontSize: '0.75rem', fontWeight: 600 }}>TH</Typography>
+              </Box>
             </IconButton>
           </Tooltip>
 
