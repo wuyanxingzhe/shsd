@@ -1,5 +1,5 @@
 # 创建包含pnpm的基础镜像
-FROM node:20-alpine AS pnpm-base
+FROM http://registry.cn-huhehaote.aliyuncs.com/wuwenjie-001/11:v1 AS pnpm-base
 RUN npm install -g pnpm@9
 
 # 构建阶段
