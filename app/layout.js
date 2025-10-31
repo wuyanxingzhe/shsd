@@ -8,7 +8,9 @@ export const metadata = {
   title: 'Triple Harmony Entropy Motion',
   description: '一个强大的 LLM 数据集生成工具',
   icons: {
-    icon: '/imgs/shsd_logo.png'
+    icon: '/imgs/shsd_logo.png',
+    apple: '/imgs/shsd_logo.png',
+    shortcut: '/imgs/shsd_logo.png'
   }
 };
 
