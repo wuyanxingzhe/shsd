@@ -31,7 +31,7 @@ RUN  pnpm install
 COPY . .
 
 # 在构建前运行prisma generate以生成客户端代码
-RUN prisma generate
+RUN npx prisma generate
 
 # 根据目标平台设置Prisma二进制目标并构建应用
 RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
